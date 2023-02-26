@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30)),
                 ),
-                child: Image(
+                child: const Image(
                   image: AssetImage("images/check-mark.png"),
                   fit: BoxFit.contain,
                 ),
@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
               ),
 
               //Textboxes
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
                           .textTheme
                           .bodyMedium!
                           .copyWith(color: Color.fromRGBO(0, 191, 166, 1)))),
-              const SizedBox(height: 30),
+              const SizedBox(height: 25),
 
               //to sign up
               TextButton(
