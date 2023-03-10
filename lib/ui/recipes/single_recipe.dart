@@ -19,13 +19,17 @@ class _SingleRecipeState extends State<SingleRecipe> {
       child: Scaffold(
         body: Stack(children: [
           //image
-          Container(
-            width: size.width,
-            height: size.height * .4,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(widget.singleRecipe['image']),
-                    fit: BoxFit.cover)),
+          Stack(
+            children: [
+              Container(
+                width: size.width,
+                height: size.height * .4,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(widget.singleRecipe['image']),
+                        fit: BoxFit.cover)),
+              ),
+            ],
           ),
           //scrollview
           SingleChildScrollView(
@@ -183,7 +187,8 @@ class _SingleRecipeState extends State<SingleRecipe> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MealPlanList()),
+                                        builder: (context) =>
+                                            const MealPlanList()),
                                   );
                                 }),
                           ),
@@ -200,9 +205,9 @@ class _SingleRecipeState extends State<SingleRecipe> {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(0, 191, 166, 1),
+                        color: const Color.fromRGBO(0, 191, 166, 1),
                         borderRadius: BorderRadius.circular(20)),
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         Icons.favorite_border,
                         color: Colors.white,

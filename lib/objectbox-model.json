@@ -1,0 +1,121 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8373663285333154395",
+      "lastPropertyId": "3:3656238120652911625",
+      "name": "MealPlan",
+      "properties": [
+        {
+          "id": "1:35942802607063352",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8217801122045514387",
+          "name": "dayofWeek",
+          "type": 9
+        },
+        {
+          "id": "3:3656238120652911625",
+          "name": "time",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:7692543004435716158",
+          "name": "recipe",
+          "targetId": "2:3493739509373638750"
+        }
+      ]
+    },
+    {
+      "id": "2:3493739509373638750",
+      "lastPropertyId": "7:2139901353205224680",
+      "name": "Recipe",
+      "properties": [
+        {
+          "id": "1:6780176770357234170",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1235187102763072384",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:8755417298461722317",
+          "name": "calories",
+          "type": 9
+        },
+        {
+          "id": "4:6254484309793900852",
+          "name": "preptime",
+          "type": 9
+        },
+        {
+          "id": "5:4699305772375925754",
+          "name": "details",
+          "type": 9
+        },
+        {
+          "id": "6:2090688494189337091",
+          "name": "ingredients",
+          "type": 30
+        },
+        {
+          "id": "7:2139901353205224680",
+          "name": "steps",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:6157516703477323715",
+      "lastPropertyId": "4:171985379804890623",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:3572541236056510131",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6187583242683147551",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6172581636943497785",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "4:171985379804890623",
+          "name": "password",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:6157516703477323715",
+  "lastIndexId": "0:0",
+  "lastRelationId": "1:7692543004435716158",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

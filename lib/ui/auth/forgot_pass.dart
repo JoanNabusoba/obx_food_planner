@@ -34,7 +34,7 @@ class _ForgotPassState extends State<ForgotPass> {
                         MaterialPageRoute(builder: (context) => const Login()),
                       );
                     },
-                    icon: Icon(Icons.arrow_back)),
+                    icon: const Icon(Icons.arrow_back)),
               ),
               const SizedBox(height: 15),
 
@@ -55,10 +55,10 @@ class _ForgotPassState extends State<ForgotPass> {
               ),
 
               //Textboxes
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: FPTextField(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: const FPTextField(
                   keyboardinputType: TextInputType.emailAddress,
                   hintText: 'Your email',
                   obscureTxt: false,

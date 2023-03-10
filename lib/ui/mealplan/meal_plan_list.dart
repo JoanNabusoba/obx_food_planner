@@ -41,7 +41,7 @@ class _MealPlanListState extends State<MealPlanList> {
                 height: 40,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: <Widget>[
+                  children: const <Widget>[
                     TabButton(
                         btnBackgroundColor: Colors.white,
                         btnTextColor: Colors.black87,
@@ -163,7 +163,7 @@ class _MealPlanListState extends State<MealPlanList> {
                       showDialog(
                           context: context,
                           barrierColor: Colors.orange.withOpacity(.5),
-                          builder: (context) => AddEditMealplan());
+                          builder: (context) => const AddEditMealplan());
                     },
                     icon: const Icon(
                       Icons.edit,

@@ -10,6 +10,6 @@ class SingleMealplan extends StatefulWidget {
 class _SingleMealplanState extends State<SingleMealplan> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

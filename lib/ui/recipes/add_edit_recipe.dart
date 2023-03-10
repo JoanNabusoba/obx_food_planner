@@ -10,6 +10,6 @@ class AddEditRecipe extends StatefulWidget {
 class _AddEditRecipeState extends State<AddEditRecipe> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }
