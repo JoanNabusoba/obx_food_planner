@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:foodplanner_app/backend/main_controller.dart';
 import 'package:foodplanner_app/ui/auth/forgot_pass.dart';
 import 'package:foodplanner_app/ui/auth/register.dart';
 import 'package:foodplanner_app/ui/recipes/recipe_list.dart';
 import 'package:foodplanner_app/ui/widgets/fp_button.dart';
 import 'package:foodplanner_app/ui/widgets/fp_textfield.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Login extends StatefulWidget {
@@ -15,6 +17,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,21 +71,23 @@ class _LoginState extends State<Login> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
-                    children: const [
+                    children: [
                       FPTextField(
                         keyboardinputType: TextInputType.emailAddress,
                         hintText: 'Your email',
                         obscureTxt: false,
                         formfieldName: 'email',
                         iconData: Icons.mail,
+                        controller: emailController,
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       FPTextField(
                         keyboardinputType: TextInputType.text,
                         hintText: 'Your password',
                         obscureTxt: true,
                         formfieldName: 'password',
                         iconData: Icons.lock,
+                        controller: passwordController,
                       ),
                     ],
                   ),
@@ -94,11 +100,10 @@ class _LoginState extends State<Login> {
                   child: FPButton(
                       text: "LOGIN",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RecipeList()),
-                        );
+                        if (MainController.to.login(
+                            emailController.text, passwordController.text)) {
+                          Get.to(() => const RecipeList());
+                        }
                       }),
                 ),
                 const SizedBox(height: 10),

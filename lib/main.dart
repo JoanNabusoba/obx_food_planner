@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:foodplanner_app/backend/main_provider.dart';
+import 'package:foodplanner_app/backend/view_model.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'ui/auth/login.dart';
 
-void main() {
+late ViewModel vm;
+
+Future<void> main() async {
+  vm = await ViewModel.create();
   runApp(
     const MyApp(),
   );
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Food Planner App',
       theme: ThemeData(
         primarySwatch: Colors.teal,

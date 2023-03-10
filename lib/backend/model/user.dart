@@ -1,3 +1,4 @@
+import 'package:dbcrypt/dbcrypt.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -5,6 +6,7 @@ import 'package:objectbox/objectbox.dart';
 class User {
   int id = 0;
   String? name;
+  @Unique()
   String? email;
   String? password;
 
@@ -14,4 +16,12 @@ class User {
     required this.email,
     required this.password,
   });
+
+  User.newUser(User user)
+      : password =
+            DBCrypt().hashpw(user.password ?? "password", DBCrypt().gensalt());
+
+  bool login(pass) {
+    return DBCrypt().checkpw("$pass", password ?? "");
+  }
 }

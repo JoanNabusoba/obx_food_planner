@@ -7,12 +7,14 @@ class FPTextField extends StatelessWidget {
       required this.hintText,
       required this.obscureTxt,
       required this.formfieldName,
-      required this.iconData})
+      required this.iconData,
+      this.controller})
       : super(key: key);
   final TextInputType keyboardinputType;
   final String hintText, formfieldName;
   final bool obscureTxt;
   final IconData iconData;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
