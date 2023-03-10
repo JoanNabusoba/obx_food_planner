@@ -5,9 +5,13 @@ import 'mealplan.dart';
 @Entity()
 //@Sync()
 class Recipe {
-  int id;
-  String title, calories, preptime, details;
-  List<String> ingredients, steps;
+  int id = 0;
+  String? title;
+  String? calories;
+  String? preptime;
+  String? details;
+  List<String>? ingredients;
+  List<String>? steps;
 
   Recipe({
     this.id = 0,

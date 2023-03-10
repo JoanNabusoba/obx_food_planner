@@ -39,13 +39,14 @@ class NamedIcon extends StatelessWidget {
               top: 0,
               right: 6,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 14),
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.orange),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 14),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.orange),
                 alignment: Alignment.center,
                 child: Text(
                   '$notificationCount',
-                  style: TextStyle(fontSize: 11),
+                  style: const TextStyle(fontSize: 11),
                 ),
               ),
             )

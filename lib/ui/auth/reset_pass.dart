@@ -35,7 +35,7 @@ class _ResetPassState extends State<ResetPass> {
                             builder: (context) => const ForgotPass()),
                       );
                     },
-                    icon: Icon(Icons.arrow_back)),
+                    icon: const Icon(Icons.arrow_back)),
               ),
               const SizedBox(height: 15),
 
@@ -56,11 +56,11 @@ class _ResetPassState extends State<ResetPass> {
               ),
 
               //Textboxes
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  children: [
+                  children: const [
                     FPTextField(
                       keyboardinputType: TextInputType.emailAddress,
                       hintText: 'New password',
@@ -91,7 +91,8 @@ class _ResetPassState extends State<ResetPass> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RecipeList()),
+                        MaterialPageRoute(
+                            builder: (context) => const RecipeList()),
                       );
                     }),
               ),

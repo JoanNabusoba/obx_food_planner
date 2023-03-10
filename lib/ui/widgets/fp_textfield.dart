@@ -17,7 +17,7 @@ class FPTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
         obscureText: obscureTxt,
         keyboardType: keyboardinputType,
@@ -35,13 +35,13 @@ class FPTextField extends StatelessWidget {
               .copyWith(color: Colors.black45),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 0,
               style: BorderStyle.none,
             ),
           ),
           filled: true,
-          contentPadding: EdgeInsets.all(17),
+          contentPadding: const EdgeInsets.all(17),
           fillColor: Colors.white,
         ),
       ),

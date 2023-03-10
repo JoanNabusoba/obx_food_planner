@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodplanner_app/ui/auth/forgot_pass.dart';
 import 'package:foodplanner_app/ui/auth/register.dart';
 import 'package:foodplanner_app/ui/recipes/recipe_list.dart';
 import 'package:foodplanner_app/ui/widgets/fp_button.dart';
 import 'package:foodplanner_app/ui/widgets/fp_textfield.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -21,103 +23,101 @@ class _LoginState extends State<Login> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
-            child: Column(children: [
-              //Image
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .3,
-                padding: const EdgeInsets.all(50),
-                // ignore: prefer_const_constructors
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(0, 191, 166, 1),
-                  // image: const DecorationImage(
-                  //     image: AssetImage("images/login.png"),
-                  //     fit: BoxFit.contain),
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
+            child: Column(
+              children: [
+                //Image
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .28,
+                  padding: const EdgeInsets.all(50),
+                  decoration: const BoxDecoration(
+                    //color: const Color.fromRGBO(0, 191, 166, 1),
+                    image: DecorationImage(
+                        image: AssetImage("images/gradient-3.jpg"),
+                        fit: BoxFit.cover),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30)),
+                  ),
+                  child: const Image(
+                    image: AssetImage("images/oblogo_white.png"),
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                child: const Image(
-                  image: AssetImage("images/check-mark.png"),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              //Title login and subtitle
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Login",
-                        style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 5),
-                    Text("Please sign in to continue",
-                        style: Theme.of(context).textTheme.bodySmall),
-                  ],
+                //Title login and subtitle
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Login",
+                          style: Theme.of(context).textTheme.titleLarge),
+                      const SizedBox(height: 5),
+                      Text("Please sign in to continue",
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
                 ),
-              ),
 
-              //Textboxes
-              const SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    FPTextField(
-                      keyboardinputType: TextInputType.emailAddress,
-                      hintText: 'Your email',
-                      obscureTxt: false,
-                      formfieldName: 'email',
-                      iconData: Icons.mail,
-                    ),
-                    SizedBox(height: 10),
-                    FPTextField(
-                      keyboardinputType: TextInputType.text,
-                      hintText: 'Your password',
-                      obscureTxt: true,
-                      formfieldName: 'password',
-                      iconData: Icons.lock,
-                    ),
-                  ],
+                //Textboxes
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: const [
+                      FPTextField(
+                        keyboardinputType: TextInputType.emailAddress,
+                        hintText: 'Your email',
+                        obscureTxt: false,
+                        formfieldName: 'email',
+                        iconData: Icons.mail,
+                      ),
+                      SizedBox(height: 10),
+                      FPTextField(
+                        keyboardinputType: TextInputType.text,
+                        hintText: 'Your password',
+                        obscureTxt: true,
+                        formfieldName: 'password',
+                        iconData: Icons.lock,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              //login button
-              SizedBox(
-                width: MediaQuery.of(context).size.width * .6,
-                child: FPButton(
-                    text: "LOGIN",
+                //login button
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * .6,
+                  child: FPButton(
+                      text: "LOGIN",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RecipeList()),
+                        );
+                      }),
+                ),
+                const SizedBox(height: 10),
+
+                //forgot password
+                TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RecipeList()),
+                        MaterialPageRoute(
+                            builder: (context) => const ForgotPass()),
                       );
-                    }),
-              ),
-              const SizedBox(height: 10),
+                    },
+                    child: Text("Forgot Password?",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: const Color.fromRGBO(0, 191, 166, 1)))),
 
-              //forgot password
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ForgotPass()),
-                    );
-                  },
-                  child: Text("Forgot Password?",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Color.fromRGBO(0, 191, 166, 1)))),
-              const SizedBox(height: 25),
-
-              //to sign up
-              TextButton(
+                //to sign up
+                TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -127,7 +127,7 @@ class _LoginState extends State<Login> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don\'t have an account?",
+                      Text("Don\\'t have an account?",
                           style: Theme.of(context).textTheme.bodyMedium),
                       const SizedBox(
                         width: 5,
@@ -140,8 +140,80 @@ class _LoginState extends State<Login> {
                                   color: const Color.fromRGBO(0, 191, 166, 1),
                                   fontWeight: FontWeight.bold)),
                     ],
-                  )),
-            ]),
+                  ),
+                ),
+                const SizedBox(
+                  height: 35,
+                ),
+
+                //URL TO GIT
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontStyle: FontStyle.italic),
+                        text: "Example App powered by ",
+                      ),
+                      TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic),
+                        text: "ObjectBox",
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 5,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(
+                      image: AssetImage("images/github.png"),
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    fontStyle: FontStyle.italic,
+                                    decoration: TextDecoration.underline),
+                            text: "Source Code",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                String url =
+                                    "https://github.com/JoanNabusoba/obx_food_planner";
+                                var urllaunchable = await canLaunchUrl(Uri.parse(
+                                    url)); //canLaunch is from url_launcher package
+                                if (urllaunchable) {
+                                  await launchUrl(Uri.parse(
+                                      url)); //launch is from url_launcher package to launch URL
+                                } else {
+                                  debugPrint("URL can't be launched.");
+                                }
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

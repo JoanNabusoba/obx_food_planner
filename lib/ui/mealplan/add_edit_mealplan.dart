@@ -27,7 +27,7 @@ class _AddEditMealplanState extends State<AddEditMealplan> {
         actions: [
           IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(
+              icon: const Icon(
                 Icons.close_rounded,
                 color: Colors.black87,
               ))
@@ -41,7 +41,7 @@ class _AddEditMealplanState extends State<AddEditMealplan> {
             itemBuilder: (context, index) {
               var item = foodList[index];
               return RadioListTile(
-                contentPadding: EdgeInsets.only(left: 0, right: 0),
+                contentPadding: const EdgeInsets.only(left: 0, right: 0),
                 value: index,
                 groupValue: value,
                 onChanged: (ind) => setState(() => value = ind!),
@@ -91,7 +91,7 @@ class _AddEditMealplanState extends State<AddEditMealplan> {
                 ),
               );
             },
-            separatorBuilder: (context, index) => Divider(
+            separatorBuilder: (context, index) => const Divider(
                   color: Colors.black38,
                 ),
             itemCount: foodList.length),

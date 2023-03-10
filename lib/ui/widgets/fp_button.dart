@@ -10,20 +10,20 @@ class FPButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.bold, color: Colors.white)),
       style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all<Color>(Color.fromRGBO(0, 191, 166, 1)),
+        backgroundColor: MaterialStateProperty.all<Color>(
+            const Color.fromRGBO(0, 191, 166, 1)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
           ),
         ),
       ),
+      child: Text(text,
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(fontWeight: FontWeight.bold, color: Colors.white)),
     );
   }
 }

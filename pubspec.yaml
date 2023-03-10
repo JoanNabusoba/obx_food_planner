@@ -41,6 +41,9 @@ dependencies:
   # objectbox_flutter_libs: any #1 only local db
   objectbox_sync_flutter_libs: any #2 both local + server
   google_fonts: ^4.0.3
+  url_launcher: ^6.1.7
+  flutter_bcrypt: ^1.0.8
+  
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,12 @@
-import 'package:foodplanner_app/model/recipe.dart';
+import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
 //@Sync()
 class MealPlan {
-  int id;
-  String dayofWeek, time;
+  int id = 0;
+  String? dayofWeek;
+  String? time;
 
   MealPlan({
     this.id = 0,
@@ -13,6 +14,5 @@ class MealPlan {
     required this.time,
   });
 
-  @Backlink('mealplan')
   final recipe = ToMany<Recipe>();
 }
