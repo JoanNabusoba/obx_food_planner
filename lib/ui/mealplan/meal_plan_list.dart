@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foodplanner_app/backend/main_controller.dart';
+import 'package:foodplanner_app/backend/model/mealplan.dart';
+import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/ui/mealplan/add_edit_mealplan.dart';
-import 'package:foodplanner_app/ui/recipes/add_edit_recipe.dart';
+import 'package:foodplanner_app/ui/recipes/single_recipe.dart';
 import 'package:foodplanner_app/ui/widgets/ob_listtile.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +17,21 @@ class MealPlanList extends StatefulWidget {
 }
 
 class _MealPlanListState extends State<MealPlanList> {
+  var currentDate = DateTime.now().toLocal();
+  var currentDay = "MON";
+  var selectedMealTime = "BREAKFAST";
+
+  var days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+  @override
+  void initState() {
+    setState(() {
+      currentDay = days[currentDate.weekday];
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,38 +70,41 @@ class _MealPlanListState extends State<MealPlanList> {
                 height: 40,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const <Widget>[
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Sun"),
-                    SizedBox(width: 16),
-                    TabButton(
-                        btnBackgroundColor: Color.fromRGBO(0, 191, 166, 1),
-                        btnTextColor: Colors.white,
-                        buttonTitle: "Mon"),
-                    SizedBox(width: 16),
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Tue"),
-                    SizedBox(width: 16),
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Wed"),
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Thur"),
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Fri"),
-                    TabButton(
-                        btnBackgroundColor: Colors.white,
-                        btnTextColor: Colors.black87,
-                        buttonTitle: "Sat"),
+                  children: <Widget>[
+                    // TabButton(
+                    //     btnBackgroundColor: Color.fromRGBO(0, 191, 166, 1),
+                    //     btnTextColor: Colors.white,
+                    //     buttonTitle: "Mon"),
+
+                    ...days
+                        .map((e) => Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                e != currentDay
+                                    ? TabButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            currentDay = e;
+                                          });
+                                        },
+                                        btnBackgroundColor: Colors.white,
+                                        btnTextColor: Colors.black87,
+                                        buttonTitle: e)
+                                    : TabButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            currentDay = e;
+                                          });
+                                        },
+                                        btnBackgroundColor:
+                                            const Color.fromRGBO(
+                                                0, 191, 166, 1),
+                                        btnTextColor: Colors.white,
+                                        buttonTitle: e),
+                                const SizedBox(width: 8),
+                              ],
+                            ))
+                        .toList()
                   ],
                 ),
               ),
@@ -91,15 +112,15 @@ class _MealPlanListState extends State<MealPlanList> {
               //Title
               const SizedBox(height: 25),
               Text(
-                "Monday, 20th March",
+                "Tap pen to add recipes",
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w400),
               ),
 
               //time
-              const SizedBox(height: 28),
+              // const SizedBox(height: 28),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -109,7 +130,18 @@ class _MealPlanListState extends State<MealPlanList> {
                         fontWeight: FontWeight.bold, color: Colors.black45),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        selectedMealTime = "BREAKFAST";
+                      });
+                      showDialog(
+                          context: context,
+                          barrierColor: Colors.orange.withOpacity(.5),
+                          builder: (context) => AddEditMealplan(
+                                mealDay: currentDay,
+                                mealTime: selectedMealTime,
+                              ));
+                    },
                     icon: const Icon(
                       Icons.edit,
                       size: 20,
@@ -120,15 +152,7 @@ class _MealPlanListState extends State<MealPlanList> {
               ),
               const SizedBox(height: 12),
 
-              //OBListTile
-              OBListTile(
-                img: "images/2.jpg",
-                title: "Tomato Soup",
-                subTitle:
-                    "Lorem ipsum dolor sit amet, conse ctetur adipiscing elit.",
-                onTileClick: () {},
-              ),
-
+              _getRecipiesPerMealTime("BREAKFAST"),
               //time
               const SizedBox(height: 28),
               Row(
@@ -140,7 +164,18 @@ class _MealPlanListState extends State<MealPlanList> {
                         fontWeight: FontWeight.bold, color: Colors.black45),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        selectedMealTime = "LUNCH";
+                      });
+                      showDialog(
+                          context: context,
+                          barrierColor: Colors.orange.withOpacity(.5),
+                          builder: (context) => AddEditMealplan(
+                                mealDay: currentDay,
+                                mealTime: selectedMealTime,
+                              ));
+                    },
                     icon: const Icon(
                       Icons.edit,
                       size: 20,
@@ -150,14 +185,7 @@ class _MealPlanListState extends State<MealPlanList> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              //OBListTile
-              OBListTile(
-                img: "images/3.jpg",
-                title: "Spaghettino",
-                subTitle: "Lorem ipsum dolor sit amet",
-                onTileClick: () {},
-              ),
+              _getRecipiesPerMealTime("LUNCH"),
 
               //time
               const SizedBox(height: 28),
@@ -171,10 +199,16 @@ class _MealPlanListState extends State<MealPlanList> {
                   ),
                   IconButton(
                     onPressed: () {
+                      setState(() {
+                        selectedMealTime = "DINNER";
+                      });
                       showDialog(
                           context: context,
                           barrierColor: Colors.orange.withOpacity(.5),
-                          builder: (context) => const AddEditMealplan());
+                          builder: (context) => AddEditMealplan(
+                                mealDay: currentDay,
+                                mealTime: selectedMealTime,
+                              ));
                     },
                     icon: const Icon(
                       Icons.edit,
@@ -186,18 +220,45 @@ class _MealPlanListState extends State<MealPlanList> {
               ),
               const SizedBox(height: 12),
 
-              //OBListTile
-              OBListTile(
-                img: "images/6.jpg",
-                title: "Pizza Bambino",
-                subTitle:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                onTileClick: () {},
-              ),
+              _getRecipiesPerMealTime("DINNER"),
             ]),
           ),
         ),
       ),
     );
+  }
+
+  _getRecipiesPerMealTime(mealtime) {
+    return Obx(() {
+      var mealPlan = MainController.to.mealPlanList.firstWhere(
+          (element) =>
+              element.dayofWeek == currentDay && element.time == "$mealtime",
+          orElse: () => MealPlan(dayofWeek: "", time: ""));
+      var recipies = mealPlan.id == 0 ? <Recipe>[] : mealPlan.recipe;
+
+      //OBListTile
+
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: recipies.map((recipe) {
+          return //OBListTile
+              Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: OBListTile(
+              img: "${recipe.image}",
+              title: "${recipe.title}",
+              subTitle: "${recipe.details}",
+              onTileClick: () {
+                MainController.to.selectRecipe(recipe);
+                Get.to(() => SingleRecipe(singleRecipe: recipe));
+              },
+              deleteClick: () {
+                MainController.to.deleteRecipeFromMealTime(mealPlan, recipe);
+              },
+            ),
+          );
+        }).toList(),
+      );
+    });
   }
 }

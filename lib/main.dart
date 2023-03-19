@@ -12,6 +12,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   vm = await ViewModel.create();
+
+  
   runApp(
     const MyApp(),
   );

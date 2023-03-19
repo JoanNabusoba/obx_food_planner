@@ -18,7 +18,7 @@ class Utils {
       backgroundColor: Colors.green.shade400,
       title: "Success!",
       message: message,
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     ));
   }
 
@@ -27,7 +27,7 @@ class Utils {
       backgroundColor: Colors.red.shade400,
       title: "Error",
       message: message,
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     ));
   }
 }

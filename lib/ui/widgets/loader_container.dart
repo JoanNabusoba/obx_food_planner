@@ -8,24 +8,27 @@ class LoaderContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black.withOpacity(.5),
-      width: Get.width,
-      height: Get.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(
-            color: Color.fromRGBO(0, 191, 166, 1),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            message,
-            style: const TextStyle(color: Colors.white),
-          )
-        ],
+    return Material(
+      color: Colors.white.withOpacity(.5),
+      child: Container(
+        color: Colors.black.withOpacity(.5),
+        width: Get.width,
+        height: Get.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(
+              color: Color.fromRGBO(0, 191, 166, 1),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              message,
+              style: const TextStyle(color: Colors.white),
+            )
+          ],
+        ),
       ),
     );
   }

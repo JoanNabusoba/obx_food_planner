@@ -22,8 +22,12 @@ class FoodCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width * .5,
               height: MediaQuery.of(context).size.height * .2,
               decoration: BoxDecoration(
-                image:
-                    DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+                image: img.isEmpty
+                    ? const DecorationImage(
+                        image: AssetImage("images/chef_purple.png"),
+                        fit: BoxFit.contain)
+                    : DecorationImage(
+                        image: NetworkImage(img), fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),

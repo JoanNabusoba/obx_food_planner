@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class TabButton extends StatelessWidget {
   final String buttonTitle;
   final Color btnTextColor, btnBackgroundColor;
+  final VoidCallback onPressed;
 
   const TabButton(
       {Key? key,
       required this.buttonTitle,
       required this.btnTextColor,
-      required this.btnBackgroundColor})
+      required this.btnBackgroundColor,
+      required this.onPressed})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class TabButton extends StatelessWidget {
           ),
         ),
       ),
+      onPressed: onPressed,
       child: Text(buttonTitle,
           style: TextStyle(fontWeight: FontWeight.bold, color: btnTextColor)),
-      onPressed: () {},
     );
   }
 }

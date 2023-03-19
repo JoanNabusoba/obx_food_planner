@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foodplanner_app/backend/main_controller.dart';
 import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/ui/mealplan/meal_plan_list.dart';
+import 'package:foodplanner_app/ui/recipes/add_edit_recipe.dart';
+import 'package:get/get.dart';
 
 import '../widgets/fp_button.dart';
 
@@ -18,6 +21,25 @@ class _SingleRecipeState extends State<SingleRecipe> {
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: Container(
+            decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(.5),
+                borderRadius:
+                    const BorderRadius.only(bottomRight: Radius.circular(10))),
+            child: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
+          ),
+        ),
         body: Stack(children: [
           //image
           Stack(
@@ -26,9 +48,15 @@ class _SingleRecipeState extends State<SingleRecipe> {
                 width: size.width,
                 height: size.height * .4,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("${widget.singleRecipe.image}"),
-                        fit: BoxFit.cover)),
+                  image: widget.singleRecipe.image == null ||
+                          widget.singleRecipe.image!.isEmpty
+                      ? const DecorationImage(
+                          image: AssetImage("images/chef_purple.png"),
+                          fit: BoxFit.contain)
+                      : DecorationImage(
+                          image: NetworkImage(widget.singleRecipe.image!),
+                          fit: BoxFit.cover),
+                ),
               ),
             ],
           ),
@@ -178,21 +206,38 @@ class _SingleRecipeState extends State<SingleRecipe> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * .5,
-                            child: FPButton(
-                                text: "Add to MealPlan",
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MealPlanList()),
-                                  );
-                                }),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(),
+                            // TextButton(
+                            //     onPressed: () {},
+                            //     child: Text(
+                            //       "Delete Recipe",
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .bodyLarge!
+                            //           .copyWith(
+                            //               fontWeight: FontWeight.bold,
+                            //               color: Colors.red.shade300),
+                            //     )),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * .4,
+                                child: FPButton(
+                                    text: "Add to MealPlan",
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MealPlanList()),
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 50,
@@ -202,19 +247,45 @@ class _SingleRecipeState extends State<SingleRecipe> {
                 Positioned(
                   top: size.height * .35 - 30,
                   right: 35,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: const Color.fromRGBO(0, 191, 166, 1),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: const Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                        size: 32,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          MainController.to.selectRecipe(widget.singleRecipe);
+                          Get.to(() => const AddEditRecipe());
+                        },
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          margin: const EdgeInsets.only(right: 8),
+                          decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: const Center(
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(0, 191, 166, 1),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Center(
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: Colors.white,
+                            size: 32,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

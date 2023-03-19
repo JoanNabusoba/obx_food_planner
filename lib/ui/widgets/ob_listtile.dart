@@ -7,10 +7,14 @@ class OBListTile extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.onTileClick,
+    required this.deleteClick,
   });
 
-  final String img, title, subTitle;
+  final String img;
+  final String title;
+  final String subTitle;
   final VoidCallback onTileClick;
+  final VoidCallback deleteClick;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,15 @@ class OBListTile extends StatelessWidget {
             height: MediaQuery.of(context).size.height * .08,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: AssetImage(img),
-                fit: BoxFit.cover,
-              ),
+              image: img == ""
+                  ? const DecorationImage(
+                      image: AssetImage("images/chef_purple.png"),
+                      fit: BoxFit.cover,
+                    )
+                  : DecorationImage(
+                      image: NetworkImage(img),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           const SizedBox(width: 20),
@@ -57,6 +66,12 @@ class OBListTile extends StatelessWidget {
               ],
             ),
           ),
+          IconButton(
+              onPressed: deleteClick,
+              icon: Icon(
+                Icons.delete_outline,
+                color: Colors.red.shade300,
+              ))
         ],
       ),
     );

@@ -24,7 +24,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 8373663285333154395),
       name: 'MealPlan',
-      lastPropertyId: const IdUid(3, 3656238120652911625),
+      lastPropertyId: const IdUid(4, 1655153188994016602),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -45,7 +45,7 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(1, 7692543004435716158),
+            id: const IdUid(3, 316408594484935810),
             name: 'recipe',
             targetId: const IdUid(2, 3493739509373638750))
       ],
@@ -155,13 +155,13 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(3, 6157516703477323715),
-      lastIndexId: const IdUid(1, 4750324122864610907),
-      lastRelationId: const IdUid(1, 7692543004435716158),
+      lastIndexId: const IdUid(2, 852995285903891444),
+      lastRelationId: const IdUid(3, 316408594484935810),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
-      retiredRelationUids: const [],
+      retiredIndexUids: const [852995285903891444],
+      retiredPropertyUids: const [1655153188994016602],
+      retiredRelationUids: const [7692543004435716158, 6130498789900355841],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
@@ -171,7 +171,7 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[0],
         toOneRelations: (MealPlan object) => [],
         toManyRelations: (MealPlan object) =>
-            {RelInfo<MealPlan>.toMany(1, object.id): object.recipe},
+            {RelInfo<MealPlan>.toMany(3, object.id): object.recipe},
         getId: (MealPlan object) => object.id,
         setId: (MealPlan object, int id) {
           object.id = id;
@@ -182,7 +182,7 @@ ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.dayofWeek!);
           final timeOffset =
               object.time == null ? null : fbb.writeString(object.time!);
-          fbb.startTable(4);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, dayofWeekOffset);
           fbb.addOffset(2, timeOffset);
@@ -200,14 +200,14 @@ ModelDefinition getObjectBoxModel() {
               time: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 8));
           InternalToManyAccess.setRelInfo(object.recipe, store,
-              RelInfo<MealPlan>.toMany(1, object.id), store.box<MealPlan>());
+              RelInfo<MealPlan>.toMany(3, object.id), store.box<MealPlan>());
           return object;
         }),
     Recipe: EntityDefinition<Recipe>(
         model: _entities[1],
         toOneRelations: (Recipe object) => [],
         toManyRelations: (Recipe object) =>
-            {RelInfo<MealPlan>.toManyBacklink(1, object.id): object.mealplan},
+            {RelInfo<MealPlan>.toManyBacklink(3, object.id): object.mealplan},
         getId: (Recipe object) => object.id,
         setId: (Recipe object, int id) {
           object.id = id;
@@ -270,7 +270,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.mealplan,
               store,
-              RelInfo<MealPlan>.toManyBacklink(1, object.id),
+              RelInfo<MealPlan>.toManyBacklink(3, object.id),
               store.box<Recipe>());
           return object;
         }),

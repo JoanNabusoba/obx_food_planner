@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:foodplanner_app/backend/model/mealplan.dart';
 import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/backend/model/user.dart';
@@ -55,5 +53,17 @@ class ViewModel {
   Stream<List<Recipe>> getRecipeStream() {
     final builder = recipeBox.query();
     return builder.watch(triggerImmediately: true).map((query) => query.find());
+  }
+
+  Stream<List<MealPlan>> getMealPlanStream() {
+    final builder = mealPlanBox.query();
+    return builder.watch(triggerImmediately: true).map((query) => query.find());
+  }
+
+  List<Recipe> getMealPlanRecipies(day, mealTime) {
+    final builder = mealPlanBox.query(
+        MealPlan_.dayofWeek.equals(day).and(MealPlan_.time.equals(mealTime)));
+    var mealtime = builder.build().findFirst();
+    return mealtime?.recipe.toList() ?? [];
   }
 }

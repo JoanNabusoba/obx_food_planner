@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:8373663285333154395",
-      "lastPropertyId": "3:3656238120652911625",
+      "lastPropertyId": "4:1655153188994016602",
       "name": "MealPlan",
       "properties": [
         {
@@ -27,7 +27,7 @@
       ],
       "relations": [
         {
-          "id": "1:7692543004435716158",
+          "id": "3:316408594484935810",
           "name": "recipe",
           "targetId": "2:3493739509373638750"
         }
@@ -115,14 +115,21 @@
     }
   ],
   "lastEntityId": "3:6157516703477323715",
-  "lastIndexId": "1:4750324122864610907",
-  "lastRelationId": "1:7692543004435716158",
+  "lastIndexId": "2:852995285903891444",
+  "lastRelationId": "3:316408594484935810",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredIndexUids": [
+    852995285903891444
+  ],
+  "retiredPropertyUids": [
+    1655153188994016602
+  ],
+  "retiredRelationUids": [
+    7692543004435716158,
+    6130498789900355841
+  ],
   "version": 1
 }

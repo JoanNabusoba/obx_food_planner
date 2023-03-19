@@ -6,9 +6,7 @@ import 'package:foodplanner_app/ui/recipes/single_recipe.dart';
 import 'package:get/get.dart';
 
 import '../widgets/food_card.dart';
-import '../widgets/named_icon.dart';
 import 'add_edit_recipe.dart';
-import 'list_data.dart';
 
 class RecipeList extends StatefulWidget {
   const RecipeList({super.key});
@@ -119,9 +117,9 @@ class _RecipeListState extends State<RecipeList> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16),
-              itemCount: MainController.to.recipeList.value.length,
+              itemCount: MainController.to.recipeList.length,
               itemBuilder: (context, index) {
-                var item = MainController.to.recipeList.value[index];
+                var item = MainController.to.recipeList[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
