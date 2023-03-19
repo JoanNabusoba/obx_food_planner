@@ -19,7 +19,9 @@ class User {
 
   User.newUser(User user)
       : password =
-            DBCrypt().hashpw(user.password ?? "password", DBCrypt().gensalt());
+            DBCrypt().hashpw(user.password ?? "password", DBCrypt().gensalt()),
+        name = user.name,
+        email = user.email;
 
   bool login(pass) {
     return DBCrypt().checkpw("$pass", password ?? "");

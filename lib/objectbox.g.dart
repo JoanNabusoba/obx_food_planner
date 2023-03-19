@@ -53,7 +53,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 3493739509373638750),
       name: 'Recipe',
-      lastPropertyId: const IdUid(7, 2139901353205224680),
+      lastPropertyId: const IdUid(8, 8692124332662719764),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -90,6 +90,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(7, 2139901353205224680),
             name: 'steps',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8692124332662719764),
+            name: 'image',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -117,7 +122,8 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 6172581636943497785),
             name: 'email',
             type: 9,
-            flags: 0),
+            flags: 2080,
+            indexId: const IdUid(1, 4750324122864610907)),
         ModelProperty(
             id: const IdUid(4, 171985379804890623),
             name: 'password',
@@ -149,7 +155,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(3, 6157516703477323715),
-      lastIndexId: const IdUid(0, 0),
+      lastIndexId: const IdUid(1, 4750324122864610907),
       lastRelationId: const IdUid(1, 7692543004435716158),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
@@ -226,7 +232,9 @@ ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeList(
                   object.steps!.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(8);
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, caloriesOffset);
@@ -234,6 +242,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, detailsOffset);
           fbb.addOffset(5, ingredientsOffset);
           fbb.addOffset(6, stepsOffset);
+          fbb.addOffset(7, imageOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -243,6 +252,8 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Recipe(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              image: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18),
               title: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 6),
               calories: const fb.StringReader(asciiOptimization: true)
@@ -251,13 +262,11 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 10),
               details: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12),
-              ingredients: const fb.ListReader<String>(
-                      fb.StringReader(asciiOptimization: true),
-                      lazy: false)
+              ingredients: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
                   .vTableGetNullable(buffer, rootOffset, 14),
-              steps:
-                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGetNullable(buffer, rootOffset, 16));
+              steps: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true),
+                      lazy: false)
+                  .vTableGetNullable(buffer, rootOffset, 16));
           InternalToManyAccess.setRelInfo(
               object.mealplan,
               store,
@@ -353,6 +362,9 @@ class Recipe_ {
   /// see [Recipe.steps]
   static final steps =
       QueryStringVectorProperty<Recipe>(_entities[1].properties[6]);
+
+  /// see [Recipe.image]
+  static final image = QueryStringProperty<Recipe>(_entities[1].properties[7]);
 }
 
 /// [User] entity fields to define ObjectBox queries.

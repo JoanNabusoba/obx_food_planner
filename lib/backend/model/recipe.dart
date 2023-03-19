@@ -6,6 +6,7 @@ import 'mealplan.dart';
 //@Sync()
 class Recipe {
   int id = 0;
+  String? image;
   String? title;
   String? calories;
   String? preptime;
@@ -15,6 +16,7 @@ class Recipe {
 
   Recipe({
     this.id = 0,
+    required this.image,
     required this.title,
     required this.calories,
     required this.preptime,

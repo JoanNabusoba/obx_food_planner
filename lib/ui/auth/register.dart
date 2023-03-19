@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodplanner_app/ui/auth/login.dart';
 import 'package:foodplanner_app/ui/recipes/recipe_list.dart';
+import 'package:foodplanner_app/utils/utils.dart';
+import 'package:get/get.dart';
+import '../../backend/main_controller.dart';
 import '../widgets/fp_button.dart';
 import '../widgets/fp_textfield.dart';
 
@@ -12,6 +15,11 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,29 +66,41 @@ class _SignupState extends State<Signup> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
-                  children: const [
+                  children: [
+                    FPTextField(
+                      keyboardinputType: TextInputType.name,
+                      hintText: 'Your name',
+                      obscureTxt: false,
+                      formfieldName: 'name',
+                      iconData: Icons.mail,
+                      controller: nameController,
+                    ),
+                    const SizedBox(height: 10),
                     FPTextField(
                       keyboardinputType: TextInputType.emailAddress,
                       hintText: 'Your email',
                       obscureTxt: false,
                       formfieldName: 'email',
                       iconData: Icons.mail,
+                      controller: emailController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     FPTextField(
                       keyboardinputType: TextInputType.text,
                       hintText: 'Your password',
                       obscureTxt: true,
                       formfieldName: 'password',
                       iconData: Icons.lock,
+                      controller: passwordController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     FPTextField(
                       keyboardinputType: TextInputType.text,
                       hintText: 'Confirm password',
                       obscureTxt: true,
                       formfieldName: 'confirm_password',
                       iconData: Icons.lock,
+                      controller: repeatPasswordController,
                     ),
                   ],
                 ),
@@ -93,11 +113,13 @@ class _SignupState extends State<Signup> {
                 child: FPButton(
                     text: "SIGN UP",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RecipeList()),
-                      );
+                      if (passwordController.text !=
+                          repeatPasswordController.text) {
+                        Utils.errorSnackbar("Password Missmatch!");
+                      } else if (MainController.to.signUp(nameController.text,
+                          emailController.text, passwordController.text)) {
+                        Get.to(() => const RecipeList());
+                      }
                     }),
               ),
               const SizedBox(height: 35),

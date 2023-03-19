@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodplanner_app/ui/mealplan/add_edit_mealplan.dart';
+import 'package:foodplanner_app/ui/recipes/add_edit_recipe.dart';
 import 'package:foodplanner_app/ui/widgets/ob_listtile.dart';
+import 'package:get/get.dart';
 
 import '../widgets/tab_button.dart';
 
@@ -17,6 +19,15 @@ class _MealPlanListState extends State<MealPlanList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
           toolbarHeight: 65,
           backgroundColor: Colors.transparent,
           elevation: 0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/backend/model/user.dart';
 import 'package:foodplanner_app/main.dart';
 import 'package:foodplanner_app/utils/utils.dart';
@@ -7,8 +8,16 @@ import 'package:get/get.dart';
 class MainController extends GetxController {
   static MainController get to => Get.find();
   var user = Rxn<User>();
+  var recipeList = <Recipe>[].obs;
+
+  @override
+  onReady() {
+    recipeList.bindStream(vm.getRecipeStream());
+  }
 
   login(String email, String password) {
+    print(vm.userBox.getAll().map((e) => e.email).join(","));
+
     if (email.isEmpty || !email.isEmail) {
       Utils.errorSnackbar("Please enter valid email");
       return false;
@@ -30,7 +39,7 @@ class MainController extends GetxController {
 
   signUp(String name, String email, String password) {
     if (name.isEmpty) {
-      Utils.errorSnackbar("Please enter username");
+      Utils.errorSnackbar("Please enter your name");
       return false;
     }
     if (email.isEmpty || !email.isEmail) {

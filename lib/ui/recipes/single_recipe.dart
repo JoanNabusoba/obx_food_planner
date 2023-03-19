@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/ui/mealplan/meal_plan_list.dart';
 
 import '../widgets/fp_button.dart';
 
 class SingleRecipe extends StatefulWidget {
   const SingleRecipe({super.key, required this.singleRecipe});
-  final Map singleRecipe;
+  final Recipe singleRecipe;
 
   @override
   State<SingleRecipe> createState() => _SingleRecipeState();
@@ -26,7 +27,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                 height: size.height * .4,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(widget.singleRecipe['image']),
+                        image: AssetImage("${widget.singleRecipe.image}"),
                         fit: BoxFit.cover)),
               ),
             ],
@@ -52,7 +53,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.singleRecipe['title'],
+                          "${widget.singleRecipe.title}",
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
@@ -64,7 +65,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                         Row(
                           children: [
                             Text(
-                              widget.singleRecipe['calories'] + " calories",
+                              "${widget.singleRecipe.calories} calories",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -92,7 +93,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                                     width: 2,
                                   ),
                                   Text(
-                                    widget.singleRecipe['preptime'],
+                                    "${widget.singleRecipe.preptime}",
                                     textAlign: TextAlign.start,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -122,7 +123,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                           height: 10,
                         ),
                         Text(
-                          widget.singleRecipe['desc'],
+                          "${widget.singleRecipe.details}",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -144,7 +145,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                           height: 10,
                         ),
                         Text(
-                          widget.singleRecipe['ingredients'],
+                          "${widget.singleRecipe.ingredients?.join("\n")}",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -166,7 +167,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                           height: 10,
                         ),
                         Text(
-                          widget.singleRecipe['steps'],
+                          "${widget.singleRecipe.steps?.join("\n")}",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

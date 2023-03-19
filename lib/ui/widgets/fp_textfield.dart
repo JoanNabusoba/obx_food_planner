@@ -21,6 +21,7 @@ class FPTextField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
+        controller: controller,
         obscureText: obscureTxt,
         keyboardType: keyboardinputType,
         style: Theme.of(context).textTheme.bodyMedium,

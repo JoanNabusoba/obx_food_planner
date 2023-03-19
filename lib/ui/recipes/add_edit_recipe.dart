@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddEditRecipe extends StatefulWidget {
   const AddEditRecipe({super.key});
@@ -10,6 +11,18 @@ class AddEditRecipe extends StatefulWidget {
 class _AddEditRecipeState extends State<AddEditRecipe> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.cancel_outlined,
+              color: Colors.white,
+            )),
+        title: const Text("Add Recipe"),
+      ),
+    );
   }
 }

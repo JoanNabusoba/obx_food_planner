@@ -16,14 +16,18 @@ class Utils {
   static successSnackbar(String message) {
     Get.showSnackbar(GetSnackBar(
       backgroundColor: Colors.green.shade400,
-      title: message,
+      title: "Success!",
+      message: message,
+      duration: Duration(milliseconds: 1500),
     ));
   }
 
   static errorSnackbar(String message) {
     Get.showSnackbar(GetSnackBar(
       backgroundColor: Colors.red.shade400,
-      title: message,
+      title: "Error",
+      message: message,
+      duration: Duration(milliseconds: 1500),
     ));
   }
 }
