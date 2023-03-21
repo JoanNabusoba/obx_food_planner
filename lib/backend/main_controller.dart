@@ -73,7 +73,9 @@ class MainController extends GetxController {
       Utils.errorSnackbar("User not registered, please try again");
       return false;
     }
-    user.value = userLoggedIn;
+    User? signedInUser = vm.findByEmail(email);
+
+    user.value = signedInUser;
     update();
     //user created account
     Utils.successSnackbar("Sign up successful");
@@ -144,7 +146,7 @@ class MainController extends GetxController {
     } else if (ingredients.isEmpty) {
       Utils.errorSnackbar("Please add at least one ingredient");
     } else if (steps.isEmpty) {
-      Utils.errorSnackbar("Add at least a step tot he recipe");
+      Utils.errorSnackbar("Add at least a step to the recipe");
     } else {
       //sets img url to the selected's recipe img url
       imageUrl = selectedRecipe.value?.image ?? "";
@@ -188,9 +190,9 @@ class MainController extends GetxController {
   //upload file
   Future<String> uploadFile(File file) async {
     final cloudinary = Cloudinary.signedConfig(
-      apiKey: "714681372945731",
-      apiSecret: "LtUAMOY5dYC5j9FUY7ix74d1XcY",
-      cloudName: 'joannabz',
+      apiKey: "--------",
+      apiSecret: "----------",
+      cloudName: '----------',
     );
 
     CloudinaryResponse response = await cloudinary.upload(
