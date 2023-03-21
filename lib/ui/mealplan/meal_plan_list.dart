@@ -250,7 +250,7 @@ class _MealPlanListState extends State<MealPlanList> {
               subTitle: "${recipe.details}",
               onTileClick: () {
                 MainController.to.selectRecipe(recipe);
-                Get.to(() => SingleRecipe(singleRecipe: recipe));
+                Get.to(() => const SingleRecipe());
               },
               deleteClick: () {
                 MainController.to.deleteRecipeFromMealTime(mealPlan, recipe);

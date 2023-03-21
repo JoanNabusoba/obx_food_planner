@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodplanner_app/backend/view_model.dart';
+import 'package:foodplanner_app/backend/objectbox_initializer.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 

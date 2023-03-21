@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:foodplanner_app/backend/main_controller.dart';
 import 'package:foodplanner_app/backend/model/mealplan.dart';
 import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/backend/model/user.dart';
 import 'package:foodplanner_app/objectbox.g.dart';
 import 'package:foodplanner_app/utils/utils.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// Provides access to the ObjectBox Store throughout the app.
@@ -28,8 +30,8 @@ class ViewModel {
     // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
-    final store =
-        await openStore(directory: "${appDocDirectory.path}/objectbox");
+    final store = await openStore(
+        directory: "${appDocDirectory.path}/obx_foodplanner_db");
     return ViewModel._create(store);
   }
 
@@ -51,8 +53,18 @@ class ViewModel {
   }
 
   Stream<List<Recipe>> getRecipeStream() {
-    final builder = recipeBox.query();
-    return builder.watch(triggerImmediately: true).map((query) => query.find());
+    final builder =
+        recipeBox.query(Recipe_.title.contains("", caseSensitive: false));
+
+    return builder.watch(triggerImmediately: true).map((query) {
+      if (MainController.to.searchQuery.isNotEmpty) {
+        return (query
+              ..param(Recipe_.title).value =
+                  MainController.to.searchQuery.value)
+            .find();
+      }
+      return query.find();
+    });
   }
 
   Stream<List<MealPlan>> getMealPlanStream() {
@@ -60,7 +72,7 @@ class ViewModel {
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 
-  List<Recipe> getMealPlanRecipies(day, mealTime) {
+  List<Recipe> getMealPlanRecipes(day, mealTime) {
     final builder = mealPlanBox.query(
         MealPlan_.dayofWeek.equals(day).and(MealPlan_.time.equals(mealTime)));
     var mealtime = builder.build().findFirst();

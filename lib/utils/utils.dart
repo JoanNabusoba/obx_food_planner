@@ -4,13 +4,16 @@ import 'package:get/get.dart';
 
 class Utils {
   static showLoader(message) {
-    Get.dialog(LoaderContainer(
-      message: message,
-    ));
+    Get.dialog(
+        LoaderContainer(
+          message: message,
+        ),
+        name: "Loader");
   }
 
   static closeLoader() {
-    Get.back();
+    Get.close(1);
+    //Get.back();
   }
 
   static successSnackbar(String message) {

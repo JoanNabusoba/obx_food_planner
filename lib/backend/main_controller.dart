@@ -15,6 +15,7 @@ class MainController extends GetxController {
   var recipeList = <Recipe>[].obs;
   var selectedRecipe = Rxn<Recipe>();
   var mealPlanList = <MealPlan>[].obs;
+  var searchQuery = "".obs;
 
   //selecting recipes to add to mealtime
   var selectedMealTime = "".obs;
@@ -33,16 +34,18 @@ class MainController extends GetxController {
       Utils.errorSnackbar("Please enter valid email");
       return false;
     }
-    User? user = vm.findByEmail(email);
-    if (user == null) {
+    User? userLoggedIn = vm.findByEmail(email);
+    if (userLoggedIn == null) {
       Utils.errorSnackbar("User not found in our database. Please sign up");
       return false;
     }
     //when user is found with wrong pass
-    if (!user.login(password)) {
+    if (!userLoggedIn.login(password)) {
       Utils.errorSnackbar("Wrong password. Try again");
       return false;
     }
+    user.value = userLoggedIn;
+    update();
     //user found and logged in
     Utils.successSnackbar("Login successful");
     return true;
@@ -61,8 +64,8 @@ class MainController extends GetxController {
       Utils.errorSnackbar("Please enter password");
       return false;
     }
-    User? user = vm.findByEmail(email);
-    if (user != null) {
+    User? userLoggedIn = vm.findByEmail(email);
+    if (userLoggedIn != null) {
       Utils.errorSnackbar("User with this account already exist, login");
       return false;
     }
@@ -70,6 +73,8 @@ class MainController extends GetxController {
       Utils.errorSnackbar("User not registered, please try again");
       return false;
     }
+    user.value = userLoggedIn;
+    update();
     //user created account
     Utils.successSnackbar("Sign up successful");
     return true;
@@ -263,5 +268,40 @@ class MainController extends GetxController {
   deleteRecipeFromMealTime(MealPlan mealPlan, Recipe recipe) {
     mealPlan.recipe.remove(recipe);
     vm.mealPlanBox.put(mealPlan);
+  }
+
+  setSearchText(searchText) {
+    searchQuery.value = searchText;
+    update();
+    recipeList.bindStream(vm.getRecipeStream());
+  }
+
+  //add to favourites
+  addToOrRemoveFromFavourites(Recipe recipe) {
+    var addUser = user.value;
+    if (addUser == null) {
+      Utils.errorSnackbar("Cannot favorite a recipe");
+      return false;
+    }
+
+    if (addUser.favourites
+            .firstWhereOrNull((element) => element.id == recipe.id) !=
+        null) {
+      addUser.favourites.removeWhere((element) => element.id == recipe.id);
+      vm.userBox.put(addUser);
+      user.value = vm.userBox.get(addUser.id);
+      update();
+      print(user.value!.favourites.length);
+
+      Utils.successSnackbar("Recipe unfavourited!");
+    } else {
+      addUser.favourites.add(recipe);
+      vm.userBox.put(addUser);
+      user.value = vm.userBox.get(addUser.id);
+      update();
+
+      print(user.value!.favourites.length);
+      Utils.successSnackbar("Recipe favourited!");
+    }
   }
 }

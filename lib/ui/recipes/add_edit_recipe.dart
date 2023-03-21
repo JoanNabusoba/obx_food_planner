@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:foodplanner_app/backend/main_controller.dart';
+import 'package:foodplanner_app/main.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../widgets/fp_button.dart';
 import '../widgets/fp_textfield.dart';
@@ -76,8 +77,9 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
                       ingredientList,
                       stepsList,
                       image)) {
-                    MainController.to.selectRecipe(null);
-                    Get.close(2);
+                    MainController.to.selectRecipe(vm.recipeBox
+                        .get(MainController.to.selectedRecipe.value?.id ?? 0));
+                    Get.close(1);
                   }
                 } else {
                   if (await MainController.to.addRecipe(
@@ -88,7 +90,7 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
                       ingredientList,
                       stepsList,
                       image)) {
-                    Get.close(2);
+                    Get.close(1);
                   }
                 }
               },
@@ -111,11 +113,15 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
             children: [
               InkWell(
                 onTap: () async {
-                  var file = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (file != null) {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    allowMultiple: false,
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'jpeg', 'png'],
+                  );
+                  if (result != null && result.paths.first != null) {
                     setState(() {
-                      image = File(file.path);
+                      image = File(result.paths.first ?? "");
                     });
                   }
                 },
@@ -293,12 +299,11 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
                             ingredientList.removeAt(stepsList.indexOf(e));
                           });
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Icon(
                             Icons.delete,
-                            size: 18,
-                            color: Colors.black45,
+                            color: Colors.red.shade400,
                           ),
                         ),
                       )
@@ -339,12 +344,11 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
                             stepsList.removeAt(stepsList.indexOf(e));
                           });
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Icon(
                             Icons.delete,
-                            size: 18,
-                            color: Colors.black45,
+                            color: Colors.red.shade400,
                           ),
                         ),
                       ),

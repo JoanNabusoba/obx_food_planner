@@ -100,7 +100,8 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(
-            name: 'mealplan', srcEntity: 'MealPlan', srcField: 'recipe')
+            name: 'mealplan', srcEntity: 'MealPlan', srcField: 'recipe'),
+        ModelBacklink(name: 'users', srcEntity: 'User', srcField: 'favourites')
       ]),
   ModelEntity(
       id: const IdUid(3, 6157516703477323715),
@@ -130,7 +131,12 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(4, 3111197969284835290),
+            name: 'favourites',
+            targetId: const IdUid(2, 3493739509373638750))
+      ],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -156,7 +162,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(3, 6157516703477323715),
       lastIndexId: const IdUid(2, 852995285903891444),
-      lastRelationId: const IdUid(3, 316408594484935810),
+      lastRelationId: const IdUid(4, 3111197969284835290),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [852995285903891444],
@@ -206,8 +212,10 @@ ModelDefinition getObjectBoxModel() {
     Recipe: EntityDefinition<Recipe>(
         model: _entities[1],
         toOneRelations: (Recipe object) => [],
-        toManyRelations: (Recipe object) =>
-            {RelInfo<MealPlan>.toManyBacklink(3, object.id): object.mealplan},
+        toManyRelations: (Recipe object) => {
+              RelInfo<MealPlan>.toManyBacklink(3, object.id): object.mealplan,
+              RelInfo<User>.toManyBacklink(4, object.id): object.users
+            },
         getId: (Recipe object) => object.id,
         setId: (Recipe object, int id) {
           object.id = id;
@@ -272,12 +280,15 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<MealPlan>.toManyBacklink(3, object.id),
               store.box<Recipe>());
+          InternalToManyAccess.setRelInfo(object.users, store,
+              RelInfo<User>.toManyBacklink(4, object.id), store.box<Recipe>());
           return object;
         }),
     User: EntityDefinition<User>(
         model: _entities[2],
         toOneRelations: (User object) => [],
-        toManyRelations: (User object) => {},
+        toManyRelations: (User object) =>
+            {RelInfo<User>.toMany(4, object.id): object.favourites},
         getId: (User object) => object.id,
         setId: (User object, int id) {
           object.id = id;
@@ -310,7 +321,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 8),
               password: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10));
-
+          InternalToManyAccess.setRelInfo(object.favourites, store,
+              RelInfo<User>.toMany(4, object.id), store.box<User>());
           return object;
         })
   };
@@ -380,4 +392,8 @@ class User_ {
 
   /// see [User.password]
   static final password = QueryStringProperty<User>(_entities[2].properties[3]);
+
+  /// see [User.favourites]
+  static final favourites =
+      QueryRelationToMany<User, Recipe>(_entities[2].relations[0]);
 }

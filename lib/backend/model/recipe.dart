@@ -1,3 +1,4 @@
+import 'package:foodplanner_app/backend/model/user.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'mealplan.dart';
@@ -27,4 +28,7 @@ class Recipe {
 
   @Backlink('recipe')
   final mealplan = ToMany<MealPlan>();
+
+  @Backlink('favourites')
+  final users = ToMany<User>();
 }

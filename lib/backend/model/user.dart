@@ -1,4 +1,5 @@
 import 'package:dbcrypt/dbcrypt.dart';
+import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -9,6 +10,9 @@ class User {
   @Unique()
   String? email;
   String? password;
+
+  final favourites = ToMany<Recipe>();
+
 
   User({
     this.id = 0,

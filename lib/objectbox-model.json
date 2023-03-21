@@ -111,12 +111,18 @@
           "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "4:3111197969284835290",
+          "name": "favourites",
+          "targetId": "2:3493739509373638750"
+        }
+      ]
     }
   ],
   "lastEntityId": "3:6157516703477323715",
   "lastIndexId": "2:852995285903891444",
-  "lastRelationId": "3:316408594484935810",
+  "lastRelationId": "4:3111197969284835290",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
