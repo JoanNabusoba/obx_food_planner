@@ -3,7 +3,6 @@ import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-//@Sync()
 class User {
   int id = 0;
   String? name;

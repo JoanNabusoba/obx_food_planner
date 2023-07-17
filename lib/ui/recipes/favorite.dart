@@ -24,36 +24,38 @@ class _FavoriteState extends State<Favorite> {
       appBar: AppBar(
         title: const Text("Your Favourites"),
       ),
-      body: Container(
-        height: Get.height,
-        width: Get.width,
-        padding: const EdgeInsets.all(20),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: (itemWidth / itemHeight),
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16),
-          itemCount: MainController.to.user.value!.favourites.length,
-          itemBuilder: (context, index) {
-            var item = MainController.to.user.value!.favourites[index];
-            return GestureDetector(
-              onTap: () {
-                MainController.to.selectRecipe(item);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SingleRecipe()));
-              },
-              child: FoodCard(
-                index,
-                description: "${item.details}".toString(),
-                img: "${item.image}".toString(),
-                preptime: "${item.preptime}".toString(),
-                title: "${item.title}".toString(),
-              ),
-            );
-          },
-        ),
-      ),
+      body: Obx(() {
+        return Container(
+          height: Get.height,
+          width: Get.width,
+          padding: const EdgeInsets.all(20),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: (itemWidth / itemHeight),
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16),
+            itemCount: MainController.to.favouriteRecipeList.length,
+            itemBuilder: (context, index) {
+              var item = MainController.to.favouriteRecipeList[index];
+              return GestureDetector(
+                onTap: () {
+                  MainController.to.selectRecipe(item);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SingleRecipe()));
+                },
+                child: FoodCard(
+                  index,
+                  description: "${item.details}".toString(),
+                  img: "${item.image}".toString(),
+                  preptime: "${item.preptime}".toString(),
+                  title: "${item.title}".toString(),
+                ),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }

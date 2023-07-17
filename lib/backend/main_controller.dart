@@ -10,6 +10,7 @@ import 'package:foodplanner_app/utils/utils.dart';
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
+  //<!-- Add the get.find to instantiate controller
   static MainController get to => Get.find();
   var user = Rxn<User>();
   var recipeList = <Recipe>[].obs;
@@ -17,14 +18,26 @@ class MainController extends GetxController {
   var mealPlanList = <MealPlan>[].obs;
   var searchQuery = "".obs;
 
-  //selecting recipes to add to mealtime
+  var favouriteRecipeList = <Recipe>[].obs;
+
+  //<!-- arr to hold selected recipes to add to mealtime
   var selectedMealTime = "".obs;
   var selectedDayTime = "".obs;
 
   @override
   onReady() {
+    //<!-- lists mealplan and recipes
     recipeList.bindStream(vm.getRecipeStream());
     mealPlanList.bindStream(vm.getMealPlanStream());
+
+    getFavourites();
+  }
+
+  getFavourites() {
+    favouriteRecipeList.clear();
+    favouriteRecipeList.refresh();
+    favouriteRecipeList.bindStream(vm.getFavoriteStream());
+    update();
   }
 
   login(String email, String password) {
@@ -82,7 +95,7 @@ class MainController extends GetxController {
     return true;
   }
 
-  //add recipe
+  //<!-- add recipe
   addRecipe(String title, String preptime, String calories, String description,
       List<String> ingredients, List<String> steps, File? image) async {
     String imageUrl = "";
@@ -99,7 +112,7 @@ class MainController extends GetxController {
     } else if (ingredients.isEmpty) {
       Utils.errorSnackbar("Please add at least one ingredient");
     } else if (steps.isEmpty) {
-      Utils.errorSnackbar("Add at least a step tot he recipe");
+      Utils.errorSnackbar("Add at least a step to the recipe");
     } else {
       if (image != null) {
         imageUrl = await uploadFile(image);
@@ -156,6 +169,7 @@ class MainController extends GetxController {
       }
 
       vm.recipeBox.put(Recipe(
+          //get's specific recipe selected using the unique
           id: id,
           image: imageUrl,
           title: title,
@@ -179,6 +193,21 @@ class MainController extends GetxController {
     update();
   }
 
+  //deleteRecipe
+  deleteRecipe(int id) {
+    Utils.showLoader("Deleting recipe");
+
+    try {
+      vm.recipeBox.remove(id);
+      Utils.closeLoader();
+      Utils.successSnackbar("Recipe deleted");
+    } catch (e) {
+      Utils.closeLoader();
+      Utils.errorSnackbar("Could not delete: $e");
+    }
+    update();
+  }
+
   //select meal day and time
   selectMealDayAndTime(mealTime, mealDay) {
     selectedDayTime.value = mealDay;
@@ -190,9 +219,9 @@ class MainController extends GetxController {
   //upload file
   Future<String> uploadFile(File file) async {
     final cloudinary = Cloudinary.signedConfig(
-      apiKey: "--------",
-      apiSecret: "----------",
-      cloudName: '----------',
+      apiKey: "#####",
+      apiSecret: "####",
+      cloudName: '####',
     );
 
     CloudinaryResponse response = await cloudinary.upload(
@@ -206,6 +235,13 @@ class MainController extends GetxController {
       return response.url ?? "";
     }
     return "";
+  }
+
+  //--EXAMPLE TO QUERY AND LIST DAY OF WEEK
+  List<Recipe> getMealPlanRecipesDay(day) {
+    final builder = vm.mealPlanBox.query(MealPlan_.dayofWeek.equals(day));
+    var mealtime = builder.build().findFirst();
+    return mealtime?.recipe.toList() ?? [];
   }
 
   //add to mealplan
@@ -240,7 +276,7 @@ class MainController extends GetxController {
             .toList()
             .isNotEmpty) {
           Utils.errorSnackbar(
-              "Recipe already exists foe that mealtime. Select a different recipe");
+              "Recipe already exists fo that mealtime. Select a different recipe");
           return false;
         } else {
           existingMealPlan.recipe.add(recipeToadd);
@@ -293,7 +329,6 @@ class MainController extends GetxController {
       vm.userBox.put(addUser);
       user.value = vm.userBox.get(addUser.id);
       update();
-      print(user.value!.favourites.length);
 
       Utils.successSnackbar("Recipe unfavourited!");
     } else {
@@ -302,8 +337,9 @@ class MainController extends GetxController {
       user.value = vm.userBox.get(addUser.id);
       update();
 
-      print(user.value!.favourites.length);
       Utils.successSnackbar("Recipe favourited!");
     }
+
+    getFavourites();
   }
 }

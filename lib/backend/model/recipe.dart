@@ -4,7 +4,6 @@ import 'package:objectbox/objectbox.dart';
 import 'mealplan.dart';
 
 @Entity()
-//@Sync()
 class Recipe {
   int id = 0;
   String? image;

@@ -6,35 +6,36 @@ import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/backend/model/user.dart';
 import 'package:foodplanner_app/objectbox.g.dart';
 import 'package:foodplanner_app/utils/utils.dart';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// Provides access to the ObjectBox Store throughout the app.
 ///
 /// Create this in the apps main function.
-class ViewModel {
+class OBxInitializer {
   late final Store store;
 
   late final Box<MealPlan> mealPlanBox;
   late final Box<User> userBox;
   late final Box<Recipe> recipeBox;
 
-  ViewModel._create(this.store) {
+  OBxInitializer._create(this.store) {
     mealPlanBox = Box<MealPlan>(store);
     userBox = Box<User>(store);
     recipeBox = Box<Recipe>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.
-  static Future<ViewModel> create() async {
+  static Future<OBxInitializer> create() async {
     // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
     final store = await openStore(
+        //create db in this dir
         directory: "${appDocDirectory.path}/obx_foodplanner_db");
-    return ViewModel._create(store);
+    return OBxInitializer._create(store);
   }
 
+//<!-- method to sign up user
   int signUpUser(String name, String email, String password) {
     int result = 0;
     //check whether user exists by finding the first email
@@ -53,16 +54,10 @@ class ViewModel {
   }
 
   Stream<List<Recipe>> getRecipeStream() {
-    final builder =
-        recipeBox.query(Recipe_.title.contains("", caseSensitive: false));
+    final builder = recipeBox.query(Recipe_.title
+        .contains(MainController.to.searchQuery.value, caseSensitive: false));
 
     return builder.watch(triggerImmediately: true).map((query) {
-      if (MainController.to.searchQuery.isNotEmpty) {
-        return (query
-              ..param(Recipe_.title).value =
-                  MainController.to.searchQuery.value)
-            .find();
-      }
       return query.find();
     });
   }
@@ -77,5 +72,18 @@ class ViewModel {
         MealPlan_.dayofWeek.equals(day).and(MealPlan_.time.equals(mealTime)));
     var mealtime = builder.build().findFirst();
     return mealtime?.recipe.toList() ?? [];
+  }
+
+  Stream<List<Recipe>> getFavoriteStream() {
+    final builder = recipeBox.query(Recipe_.id.oneOf(
+        MainController.to.user.value == null
+            ? []
+            : MainController.to.user.value!.favourites
+                .map((favourite) => favourite.id)
+                .toList()));
+
+    return builder.watch(triggerImmediately: true).map((query) {
+      return query.find();
+    });
   }
 }

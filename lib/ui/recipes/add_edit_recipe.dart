@@ -295,8 +295,9 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
                               child: Text(e))),
                       InkWell(
                         onTap: () {
+                          print(e);
                           setState(() {
-                            ingredientList.removeAt(stepsList.indexOf(e));
+                            ingredientList.removeAt(ingredientList.indexOf(e));
                           });
                         },
                         child: Padding(
@@ -367,6 +368,8 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
   showEditIngredientModal(selectedIngredient) {
     if (selectedIngredient != null) {
       ingredientsController.text = selectedIngredient;
+    } else {
+      ingredientsController.text = "";
     }
     Get.dialog(
       Material(
@@ -445,6 +448,8 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
   showEditStepsModal(selectedStep) {
     if (selectedStep != null) {
       stepsController.text = selectedStep;
+    } else {
+      stepsController.text = "";
     }
     Get.dialog(
       Material(

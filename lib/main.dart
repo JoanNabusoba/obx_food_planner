@@ -6,14 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'backend/binding.dart';
 import 'ui/auth/login.dart';
 
-late ViewModel vm;
+late OBxInitializer vm;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  vm = await ViewModel.create();
+  vm = await OBxInitializer.create();
 
-  
   runApp(
     const MyApp(),
   );

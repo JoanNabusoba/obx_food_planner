@@ -4,7 +4,7 @@
 // With a Dart package, run `dart run build_runner build`.
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, depend_on_referenced_packages
 // coverage:ignore-file
 
 import 'dart:typed_data';
@@ -53,7 +53,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 3493739509373638750),
       name: 'Recipe',
-      lastPropertyId: const IdUid(8, 8692124332662719764),
+      lastPropertyId: const IdUid(10, 1773030331852265185),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -160,13 +160,21 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 6157516703477323715),
+      lastEntityId: const IdUid(4, 9179833184191712325),
       lastIndexId: const IdUid(2, 852995285903891444),
       lastRelationId: const IdUid(4, 3111197969284835290),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [9179833184191712325],
       retiredIndexUids: const [852995285903891444],
-      retiredPropertyUids: const [1655153188994016602],
+      retiredPropertyUids: const [
+        1655153188994016602,
+        8673836550697465560,
+        1773030331852265185,
+        9148986251131637798,
+        8489239568618794206,
+        3602678278253174769,
+        5098351816299846018
+      ],
       retiredRelationUids: const [7692543004435716158, 6130498789900355841],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -205,8 +213,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 6),
               time: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 8));
-          InternalToManyAccess.setRelInfo(object.recipe, store,
-              RelInfo<MealPlan>.toMany(3, object.id), store.box<MealPlan>());
+          InternalToManyAccess.setRelInfo<MealPlan>(
+              object.recipe, store, RelInfo<MealPlan>.toMany(3, object.id));
           return object;
         }),
     Recipe: EntityDefinition<Recipe>(
@@ -242,7 +250,7 @@ ModelDefinition getObjectBoxModel() {
                   object.steps!.map(fbb.writeString).toList(growable: false));
           final imageOffset =
               object.image == null ? null : fbb.writeString(object.image!);
-          fbb.startTable(9);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, caloriesOffset);
@@ -275,13 +283,10 @@ ModelDefinition getObjectBoxModel() {
               steps: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true),
                       lazy: false)
                   .vTableGetNullable(buffer, rootOffset, 16));
-          InternalToManyAccess.setRelInfo(
-              object.mealplan,
-              store,
-              RelInfo<MealPlan>.toManyBacklink(3, object.id),
-              store.box<Recipe>());
-          InternalToManyAccess.setRelInfo(object.users, store,
-              RelInfo<User>.toManyBacklink(4, object.id), store.box<Recipe>());
+          InternalToManyAccess.setRelInfo<Recipe>(object.mealplan, store,
+              RelInfo<MealPlan>.toManyBacklink(3, object.id));
+          InternalToManyAccess.setRelInfo<Recipe>(
+              object.users, store, RelInfo<User>.toManyBacklink(4, object.id));
           return object;
         }),
     User: EntityDefinition<User>(
@@ -321,8 +326,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 8),
               password: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10));
-          InternalToManyAccess.setRelInfo(object.favourites, store,
-              RelInfo<User>.toMany(4, object.id), store.box<User>());
+          InternalToManyAccess.setRelInfo<User>(
+              object.favourites, store, RelInfo<User>.toMany(4, object.id));
           return object;
         })
   };

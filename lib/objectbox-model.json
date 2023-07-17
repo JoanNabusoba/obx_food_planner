@@ -35,7 +35,7 @@
     },
     {
       "id": "2:3493739509373638750",
-      "lastPropertyId": "8:8692124332662719764",
+      "lastPropertyId": "10:1773030331852265185",
       "name": "Recipe",
       "properties": [
         {
@@ -120,18 +120,26 @@
       ]
     }
   ],
-  "lastEntityId": "3:6157516703477323715",
+  "lastEntityId": "4:9179833184191712325",
   "lastIndexId": "2:852995285903891444",
   "lastRelationId": "4:3111197969284835290",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    9179833184191712325
+  ],
   "retiredIndexUids": [
     852995285903891444
   ],
   "retiredPropertyUids": [
-    1655153188994016602
+    1655153188994016602,
+    8673836550697465560,
+    1773030331852265185,
+    9148986251131637798,
+    8489239568618794206,
+    3602678278253174769,
+    5098351816299846018
   ],
   "retiredRelationUids": [
     7692543004435716158,

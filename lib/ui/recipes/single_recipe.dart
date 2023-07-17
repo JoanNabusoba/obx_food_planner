@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodplanner_app/backend/main_controller.dart';
-import 'package:foodplanner_app/backend/model/recipe.dart';
 import 'package:foodplanner_app/ui/mealplan/meal_plan_list.dart';
 import 'package:foodplanner_app/ui/recipes/add_edit_recipe.dart';
 import 'package:get/get.dart';
@@ -292,12 +291,12 @@ class _SingleRecipeState extends State<SingleRecipe> {
                                                     element.id ==
                                                     singleRecipe!.id) !=
                                             null
-                                    ? Icon(
+                                    ? const Icon(
                                         Icons.favorite,
                                         color: Colors.white,
                                         size: 32,
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.favorite_outline,
                                         color: Colors.white,
                                         size: 32,

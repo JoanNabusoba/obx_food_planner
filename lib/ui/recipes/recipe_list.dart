@@ -135,6 +135,9 @@ class _RecipeListState extends State<RecipeList> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => const SingleRecipe()));
                         },
+                        onLongPress: () {
+                          MainController.to.deleteRecipe(item.id);
+                        },
                         child: FoodCard(
                           index,
                           description: "${item.details}".toString(),
